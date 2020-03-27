@@ -4,11 +4,11 @@
  * @Author: Caoshuangna
  * @Date: 2020-03-19 09:21:38
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-26 13:43:36
+ * @LastEditTime: 2020-03-27 13:48:04
  -->
 <template>
   <div class="about">
-    <!-- <van-row>
+    <van-row>
   <van-col span="8"></van-col>
   <van-col span="8"><van-form @submit="onSubmit">
       <van-field v-model="username"
@@ -32,7 +32,7 @@
       </div>
     </van-form></van-col>
   <van-col span="8"></van-col>
-</van-row> -->
+</van-row>
     
   </div>
 </template>
@@ -46,7 +46,21 @@ export default {
   },
   methods: {
     onSubmit (values) {
-      console.log('submit', values);
+      // console.log('submit', values);
+    },
+    getExcellentVideoList () {
+      let data = {
+        sooId: this.sooId,
+      }
+      this.$axios.post('/api/user/login', data).then(
+        res => {
+          res.list.map(_ => _.videoTitleUrl = _.videoTitleUrl.replace(/@OSS:/, "http://").replace(/,/, "/"))
+          this.excellentRadioInfo = res.list
+        },
+        err => {
+          err.msg && this.$message.error(err.msg);
+        }
+      )
     },
   },
 };

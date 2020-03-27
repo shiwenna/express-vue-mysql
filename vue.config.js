@@ -4,7 +4,7 @@
  * @Author: Caoshuangna
  * @Date: 2019-03-21 11:23:18
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-24 16:46:19
+ * @LastEditTime: 2020-03-27 15:23:27
  */
 const path = require('path');
 
@@ -14,6 +14,21 @@ const path = require('path');
 module.exports = {
   // publicPath: './',
   // assetsDir: 'static',
+  devServer: {
+    disableHostCheck: true,
+    clientLogLevel: 'warning',
+    // 代理器中设置/api,项目中请求路径为/api的替换为target
+    proxy: {
+      '/api': {
+        target: 'http://192.168.30.29:3000/api/',
+        changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
+        //pathRewrite方法重写url
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  },
   chainWebpack: config => {
     let temp = config
       .entry('app')

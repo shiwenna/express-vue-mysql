@@ -12,6 +12,7 @@
   },
   "main": "src/server/index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "browserify": "^16.5.0",
     "connect-history-api-fallback": "^1.6.0",
     "esm": "^3.2.25",

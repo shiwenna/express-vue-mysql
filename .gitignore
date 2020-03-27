@@ -66,3 +66,5 @@ typings/
 .idea
 public/js
 public/images
+
+.vscode
