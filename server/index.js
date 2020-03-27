@@ -4,17 +4,22 @@
  * @Author: Caoshuangna
  * @Date: 2019-03-21 11:23:18
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-27 15:22:33
+ * @LastEditTime: 2020-03-27 17:09:57
  */
 import express from 'express'
 import webpack from 'webpack'
 import path from 'path'
+const bodyParser = require('body-parser');//post body属性
 var logger = require('tracer').console();
 var history = require('connect-history-api-fallback');
 
 const userApi = require('./api/userApi')
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded())
+
 // app.use(history());
 
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))

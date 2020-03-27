@@ -4,7 +4,7 @@
  * @Author: Caoshuangna
  * @Date: 2020-03-26 16:20:53
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-27 14:39:38
+ * @LastEditTime: 2020-03-27 17:20:34
  */
 var models = require('../mysql.config');
 var express = require('express');
@@ -117,18 +117,17 @@ router.post('/addUser', (req, res) => {
             jsonWrite(res, result);
         }
     })
-});
+})
 
-//查找用户接口
-router.post('/login', (req, res) => {
+.post('/login', (req, res) => { //查找用户接口
     var sql_name = $sql.user.select_name;
     // var sql_password = $sql.user.select_password;
     var params = req.body;
     console.log(params);
     if (params.name) {
-        sql_name += "where username ='"+ params.name +"'";
+        sql_name += " where username ='" + params.name + "'";
     }
-    var keywords = JSON.parse(Object.keys(params)[0]);
+    
     conn.query(sql_name, params.name, function(err, result) {
         if (err) {
             console.log(err);
@@ -140,17 +139,16 @@ router.post('/login', (req, res) => {
             var resultArray = result[0];
             console.log(resultArray.password);
            // console.log(keywords);
-            if(resultArray.password === keywords.password) {
+            if(resultArray.password === params.password) {
                 jsonWrite(res, result);
             } else {
                 res.send('0')   //username
             }
         }
     })
-});
+})
 
-//获取用户信息
-router.get('/getUser', (req, res) => {
+.get('/getUser', (req, res) => { //获取用户信息
     var sql_name = $sql.user.select_name;
     // var sql_password = $sql.user.select_password;
     console.log('请求参数',req.query)
@@ -171,10 +169,8 @@ router.get('/getUser', (req, res) => {
             jsonWrite(res, result);
         }
     })
-});
-
-//更新用户信息
-router.post('/updateUser', (req, res) => {
+})
+.post('/updateUser', (req, res) => { //更新用户信息
     var sql_update = $sql.user.update_user;
     var params = req.body;
     console.log(params);
@@ -197,10 +193,8 @@ router.post('/updateUser', (req, res) => {
             res.send('ok'); 
         }
     })
-});
-
-//更改密码
-router.post('/modifyPassword', (req, res) => {
+})
+.post('/modifyPassword', (req, res) => { //更改密码
     var sql_modify = $sql.user.update_user;
     var params = req.body;
     console.log(params);
