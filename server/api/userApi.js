@@ -4,7 +4,7 @@
  * @Author: Caoshuangna
  * @Date: 2020-03-26 16:20:53
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-27 17:20:34
+ * @LastEditTime: 2020-03-30 17:06:42
  */
 var models = require('../mysql.config');
 var express = require('express');
@@ -20,33 +20,6 @@ var sqlMap = {
 }
 var $sql = sqlMap;
 
-
-
-// var mysql      = require('mysql');
-// var connection = mysql.createConnection({
-//   host     : 'localhost',
-//   user     : 'root',
-//   password : '123456',
-//   database : 'test2',
-//   port: 3306
-// });
-
-
-// connection.connect(function (err) {
-//   if (err) {
-//     console.info('[query] - :' + err);
-//       return;
-//   }
-//   console.info('[connection connect]  succeed!');
-// });	// 创建一个mysql的线程
-
-// connection.query('SELECT 1 + 1 AS solution', (err, results, fields) => {
-// 	if (err) {
-// 		throw  err;
-// 	}
-
-// 	console.info('The solution is:', results[0].solution);	// 返回第一条记录的solution列的内容
-// });
 function handleError(err) {
   if (err) {
       // 如果是连接异常，自动重新连接
@@ -59,7 +32,6 @@ function handleError(err) {
   }
 }
 
-// var conn = mysql.createConnection(models);
 
 function connect() {
   conn = mysql.createConnection(models);
@@ -78,17 +50,6 @@ connect();
 //   }
 // });
 
-
-// var connection = mysql.createConnection(databaseConfig);
-//     connection.connect(
-//       function (err) {
-//       if (err) {
-//         logger.info('数据库链接失败');
-//         throw err;
-//       }
-//     }
-
-
 var jsonWrite = function(res, ret) {
     if(typeof ret === 'undefined') {
         res.send('err');
@@ -106,9 +67,9 @@ var dateStr = function(str) {
 router.post('/addUser', (req, res) => {
     var sql = $sql.user.add;
     var params = req.body;
+    console.log(sql);
     console.log(params);
-    console.log(params.name);
-    conn.query(sql, [params.name, params.account, params.pass, params.checkPass,
+    conn.query(sql, [params.name, params.account, params.password, params.repeatPass,
                     params.email, params.phone, params.card, dateStr(params.birth), params.sex], function(err, result) {
         if (err) {
             console.log(err);
@@ -199,8 +160,8 @@ router.post('/addUser', (req, res) => {
     var params = req.body;
     console.log(params);
     if (params.id) {
-        sql_modify +=  " password = '" + params.pass +
-                        "',repeatPass = '" + params.checkPass +
+        sql_modify +=  " password = '" + params.password +
+                        "',repeatPass = '" + params.repeatPass +
                         "' where id ='"+ params.id + "'";
     }
     conn.query(sql_modify, params.id, function(err, result) {
