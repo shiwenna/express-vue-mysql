@@ -4,7 +4,7 @@
  * @Author: Caoshuangna
  * @Date: 2019-03-21 11:23:18
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-27 17:09:57
+ * @LastEditTime: 2021-07-14 16:10:46
  */
 import express from 'express'
 import webpack from 'webpack'
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded())
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/api/user',userApi)
+app.use('/api/user', userApi)
 //跟顺序有关todo
 app.use(history());
 
@@ -51,16 +51,37 @@ if (app.get('env') === 'development') {
   // }));
 
 }
+if (app.get('env') === 'production') {
 
-// app.use('/static', express.static(path.join(__dirname, '../../dist/static')))
+  app.use('/', express.static(path.join(__dirname, '../dist')))
+  // app.get("/", function(req, res) {
+  //   res.sendFile('index.html', { root: path.join(__dirname, '../dist') });
+  // })
+  app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, '../dist/index.html'), function (err) {
+      if (err) {
+        logger.info(err);
+        res.status(err.status).end();
+      }
+    }
+    );
+  });
 
-// app.get("/", function(req, res) {
-//     res.sendFile(path.join(__dirname, '../../dist/index.html'));
-// });
+}
 
+app.all('*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
 
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
 
+  res.header("X-Powered-By", ' 3.2.1');
+
+  res.header("Content-Type", "application/json;charset=utf-8");
+
+  next();
+})
 // Serve the files on port 3000.
 app.listen(3000, () => {
   // console.log('Example app listening on port 3000! \n');
