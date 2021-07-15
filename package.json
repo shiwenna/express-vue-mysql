@@ -1,8 +1,8 @@
 {
-  "name": "webpack-babel",
+  "name": "express-vue-mysql",
   "version": "1.0.0",
   "description": "a vue-express-vuecli3 project",
-  "author": "biubiupiu",
+  "author": "caoshuangna",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -10,7 +10,7 @@
     "dev": "set VUE_CLI_BABEL_TRANSPILE_MODULES=true&&nodemon index.js",
     "start": "set NODE_ENV=production&&set VUE_CLI_BABEL_TRANSPILE_MODULES=true&&node index.js"
   },
-  "main": "src/server/index.js",
+  "main": "server/index.js",
   "dependencies": {
     "axios": "^0.19.2",
     "browserify": "^16.5.0",
@@ -74,6 +74,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/biubiupiu1/vue-express-vuecli3-template.git"
+    "url": "git+https://github.com/shiwenna/express-vue-mysql.git"
   }
 }

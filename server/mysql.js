@@ -4,7 +4,7 @@
  * @Author: Caoshuangna
  * @Date: 2020-03-19 13:21:01
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-27 13:38:29
+ * @LastEditTime: 2021-07-15 10:15:55
  */
 var mysql = require('mysql');
 var logger = require('tracer').console();
@@ -41,12 +41,13 @@ var databaseConfig = require('./mysql.config');
 //   }
 // };
 
-var connection = mysql.createConnection({
-	host: 'localhost',	// 连接的服务器
-	user: 'root',	// 用户名
-	password: '123456',	// 用户密码
-	database: 'test2'	// 选择的库
-});
+// var connection = mysql.createConnection({
+// 	host: 'localhost',	// 连接的服务器
+// 	user: 'root',	// 用户名
+// 	password: '123456',	// 用户密码
+// 	database: 'test2'	// 选择的库
+// });
+var connection = mysql.createConnection(databaseConfig);
 
 connection.connect(function (err) {
   if (err) {
@@ -56,13 +57,13 @@ connection.connect(function (err) {
   logger.info('[connection connect]  succeed!');
 });	// 创建一个mysql的线程
 
-connection.query('SELECT 1 + 1 AS solution', (err, results, fields) => {
-	if (err) {
-		throw  err;
-	}
+// connection.query('SELECT 1 + 1 AS solution', (err, results, fields) => {
+// 	if (err) {
+// 		throw  err;
+// 	}
 
-	logger.info('The solution is:', results[0].solution);	// 返回第一条记录的solution列的内容
-});
+// 	logger.info('The solution is:', results[0].solution);	// 返回第一条记录的solution列的内容
+// });
 
 // // // 增
 

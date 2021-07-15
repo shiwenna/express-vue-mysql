@@ -4,7 +4,7 @@
  * @Author: Caoshuangna
  * @Date: 2020-03-19 09:21:38
  * @LastEditors: Caoshuangna
- * @LastEditTime: 2020-03-31 15:15:37
+ * @LastEditTime: 2021-07-15 15:30:11
  -->
 <template>
   <div class="about">
@@ -117,133 +117,6 @@ export default {
       card: '',
       birth: '',
       sex: '1',
-      testData: [{
-        id: "1",
-        pid: 0,
-        label: "一级 1",
-        children: [
-          {
-            id: "1-1",
-            pid: "1",
-            label: "二级 1-1",
-            disabled: false,
-            children: []
-          },
-          {
-            id: "1-2",
-            pid: "1",
-            label: "二级 1-2",
-            children: [
-              {
-                id: "1-2-1",
-                pid: "1-2",
-                children: [],
-                label: "二级 1-2-1"
-              },
-              {
-                id: "1-2-2",
-                pid: "1-2",
-                children: [],
-                label: "二级 1-2-2"
-              }
-            ]
-          }
-        ]
-      }],
-      arr: [
-        {
-          id: 0,
-          event: '事件1',
-          timeLine: 50,
-          comment: '无',
-          age: 13
-        },
-        {
-          id: 1,
-          event: '事件1',
-          timeLine: 100,
-          comment: '无',
-          age: 13,
-          children: [
-            {
-              id: 2,
-              event: '事件2',
-              timeLine: 10,
-              comment: '无',
-              age: 11
-            },
-            {
-              id: 3,
-              event: '事件3',
-              timeLine: 90,
-              comment: '无',
-              age: 13,
-              children: [
-                {
-                  id: 4,
-                  event: '事件4',
-                  timeLine: 5,
-                  comment: '无',
-                  age: 17,
-                },
-                {
-                  id: 5,
-                  event: '事件5',
-                  timeLine: 10,
-                  comment: '无',
-                  age: 13
-                },
-                {
-                  id: 6,
-                  event: '事件6',
-                  timeLine: 75,
-                  comment: '无',
-                  age: 13,
-                  children: [
-                    {
-                      id: 7,
-                      event: '事件7',
-                      timeLine: 50,
-                      comment: '无',
-                      age: 13,
-                      children: [
-                        {
-                          id: 71,
-                          event: '事件71',
-                          timeLine: 25,
-                          comment: 'xx',
-                          age: 18
-                        },
-                        {
-                          id: 72,
-                          event: '事件72',
-                          timeLine: 5,
-                          comment: 'xx',
-                          age: 13
-                        },
-                        {
-                          id: 73,
-                          event: '事件73',
-                          timeLine: 20,
-                          comment: 'xx',
-                          age: 15
-                        }
-                      ]
-                    },
-                    {
-                      id: 8,
-                      event: '事件8',
-                      timeLine: 25,
-                      comment: '无',
-                      age: 19
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
     };
   },
   methods: {
@@ -317,67 +190,67 @@ export default {
       }
       return newarr
     },
-    deal (nodes, predicate) {
-      // 如果已经没有节点了，结束递归
-      if (!(nodes && nodes.length)) {
-        return [];
-      }
+    // deal (nodes, predicate) {
+    //   // 如果已经没有节点了，结束递归
+    //   if (!(nodes && nodes.length)) {
+    //     return [];
+    //   }
 
-      const newChildren = [];
-      for (const node of nodes) {
-        if (predicate(node)) {
-          // 如果节点符合条件，直接加入新的节点集
-          newChildren.push(node);
-          node.children = this.deal(node.children, predicate);
-        } else {
-          // 如果当前节点不符合条件，递归过滤子节点，
-          // 把符合条件的子节点提升上来，并入新节点集
-          newChildren.push(...this.deal(node.children, predicate));
-        }
-      }
-      return newChildren;
-    },
-    deal1 (nodes, predicate) {
-      // 如果已经没有节点了，结束递归
-      if (!(nodes && nodes.length)) {
-        return;
-      }
+    //   const newChildren = [];
+    //   for (const node of nodes) {
+    //     if (predicate(node)) {
+    //       // 如果节点符合条件，直接加入新的节点集
+    //       newChildren.push(node);
+    //       node.children = this.deal(node.children, predicate);
+    //     } else {
+    //       // 如果当前节点不符合条件，递归过滤子节点，
+    //       // 把符合条件的子节点提升上来，并入新节点集
+    //       newChildren.push(...this.deal(node.children, predicate));
+    //     }
+    //   }
+    //   return newChildren;
+    // },
+    // deal1 (nodes, predicate) {
+    //   // 如果已经没有节点了，结束递归
+    //   if (!(nodes && nodes.length)) {
+    //     return;
+    //   }
 
-      const newChildren = [];
+    //   const newChildren = [];
 
-      const newChildren3 = [] ;
-      for (const node of nodes) {
-        if (predicate(node)) {
-          // 如果自己（节点）符合条件，直接加入到新的节点集
-          newChildren.push(node);
-  
-          newChildren3.push(node);
-          // 并接着处理其 children
-          node.children = this.deal1(node.children, predicate);
-        } else {
-          // 如果自己不符合条件，需要根据子集来判断它是否将其加入新节点集
-          // 根据递归调用 deal() 的返回值来判断
-          const subs = this.deal1(node.children, predicate);
-          if (subs && subs.length) {
-            // 1. 如果子孙集中有符合要求的节点（返回 [...])，加入
-            node.children = subs;
-            newChildren.push(node);
+    //   var newChildren3 = [] ;
+    //   for (const node of nodes) {
+    //     if (predicate(node)) {
+    //       // 如果自己（节点）符合条件，直接加入到新的节点集
+    //       newChildren.push(node);
 
-            newChildren3 = nodes;
-          }
-          // 2. 否则，不加入（因为整个子集都没有符合条件的）
-        }
-      }
-      return newChildren.length ? newChildren3 : void 0;
-      // return newChildren2 ;
-    }
+    //       newChildren3.push(node);
+    //       // 并接着处理其 children
+    //       node.children = this.deal1(node.children, predicate);
+    //     } else {
+    //       // 如果自己不符合条件，需要根据子集来判断它是否将其加入新节点集
+    //       // 根据递归调用 deal() 的返回值来判断
+    //       const subs = this.deal1(node.children, predicate);
+    //       if (subs && subs.length) {
+    //         // 1. 如果子孙集中有符合要求的节点（返回 [...])，加入
+    //         node.children = subs;
+    //         newChildren.push(node);
+
+    //         newChildren3 = nodes;
+    //       }
+    //       // 2. 否则，不加入（因为整个子集都没有符合条件的）
+    //     }
+    //   }
+    //   return newChildren.length ? newChildren3 : void 0;
+    //   // return newChildren2 ;
+    // }
   },
   created () {
     // console.log(this.getParents(this.testData, '1-2-1'))
     // console.log(this.render(this.arr, newarr))
     // console.log(this.deal(this.arr, node => node.age === 13))
     // console.log(this.deal1(this.arr, node => node.age === 13))
-    console.log(this.deal1(this.testData, node => node.id === '1-2-2'))
+    // console.log(this.deal1(this.testData, node => node.id === '1-2-2'))
   }
 };
 </script>
